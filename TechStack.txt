@@ -1,0 +1,12 @@
+Front End :
+1. React js
+2. Tailwind css
+
+Backend:
+1. Node js
+2. Express js
+3. Mongodb
+
+
+Api Testing :
+Insomnia
