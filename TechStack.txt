@@ -1,12 +1,16 @@
 Front End :
 1. React js
 2. Tailwind css
+3. Redux Toolkit
 
 Backend:
 1. Node js
 2. Express js
 3. Mongodb
 
+Authentication:
+Firebase Authentication(Google)
 
 Api Testing :
 Insomnia
+Redux DevTools
