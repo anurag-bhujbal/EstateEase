@@ -193,7 +193,8 @@ export default function Profile() {
         <input
           type='text'
           placeholder='username'
-          defaultValue={currentUser.username}
+          defaultValue={currentUser.username.slice(0, -4)}
+
           id='username'
           className='border p-3 rounded-lg'
           onChange={handleChange}
