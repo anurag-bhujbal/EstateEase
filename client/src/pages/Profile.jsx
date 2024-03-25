@@ -18,10 +18,9 @@ import {
 } from '../redux/user/UserSlice';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 export default function Profile() {
-  const{currentUser, loading, error } = useSelector((state) => state.user);
   const fileRef = useRef(null);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
@@ -30,12 +29,19 @@ export default function Profile() {
   const [showListingsError, setShowListingsError] = useState(false);
   const [userListings, setUserListings] = useState([]);
   const dispatch = useDispatch();
- 
+
+  // firebase storage
+  // allow read;
+  // allow write: if
+  // request.resource.size < 2 * 1024 * 1024 &&
+  // request.resource.contentType.matches('image/.*')
+
   useEffect(() => {
     if (file) {
       handleFileUpload(file);
     }
   }, [file]);
+
   const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
@@ -136,7 +142,6 @@ export default function Profile() {
     }
   };
 
-  
   const handleListingDelete = async (listingId) => {
     try {
       const res = await fetch(`/api/listing/delete/${listingId}`, {
@@ -156,18 +161,17 @@ export default function Profile() {
     }
   };
   return (
-     <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl font-semibold text-center my-7'>
-      Profile</h1>
+    <div className='p-3 max-w-lg mx-auto'>
+      <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
-      <input
+        <input
           onChange={(e) => setFile(e.target.files[0])}
           type='file'
           ref={fileRef}
           hidden
           accept='image/*'
         />
-      <img
+        <img
           onClick={() => fileRef.current.click()}
           src={formData.avatar || currentUser.avatar}
           alt='profile'
@@ -209,7 +213,7 @@ export default function Profile() {
           id='password'
           className='border p-3 rounded-lg'
         />
-         <button
+        <button
           disabled={loading}
           className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
         >
@@ -233,6 +237,7 @@ export default function Profile() {
           Sign out
         </span>
       </div>
+
       <p className='text-red-700 mt-5'>{error ? error : ''}</p>
       <p className='text-green-700 mt-5'>
         {updateSuccess ? 'User is updated successfully!' : ''}
@@ -243,6 +248,7 @@ export default function Profile() {
       <p className='text-red-700 mt-5'>
         {showListingsError ? 'Error showing listings' : ''}
       </p>
+
       {userListings && userListings.length > 0 && (
         <div className='flex flex-col gap-4'>
           <h1 className='text-center mt-7 text-2xl font-semibold'>
@@ -283,6 +289,5 @@ export default function Profile() {
         </div>
       )}
     </div>
-    
-  )
+  );
 }
